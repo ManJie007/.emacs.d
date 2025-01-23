@@ -1,10 +1,10 @@
 ;; 关闭工具栏，tool-bar-mode 即为一个 Minor Mode
- (tool-bar-mode -1)
+(tool-bar-mode -1)
 
- ;;关闭菜单栏
- (menu-bar-mode -1)
+;;关闭菜单栏
+(menu-bar-mode -1)
 
- (scroll-bar-mode -1)
+(scroll-bar-mode -1)
 
 ;; 更改光标的样式（不能生效，解决方案见第二集）
 (setq cursor-type 'bar)
@@ -68,38 +68,38 @@
   :bind
   (("C-c SPC" . ace-jump-mode)) ;; 可以绑定到您喜欢的快捷键
   :config
-  (ace-jump-mode 1)
-  ;; 如果使用 evil 模式，可以绑定到 normal 模式下的快捷键
-  (with-eval-after-load 'evil
-    (define-key evil-normal-state-map (kbd "SPC SPC") 'ace-jump-mode)))
+  (ace-jump-mode 1))
+  ;;;; 如果使用 evil 模式，可以绑定到 normal 模式下的快捷键
+  ;;(with-eval-after-load 'evil
+  ;;  (define-key evil-normal-state-map (kbd "SPC SPC") 'ace-jump-mode)))
 
-;; Enable Evil
-  (use-package evil
-    :init
-    (setq evil-want-integration t)
-    (setq evil-want-keybinding nil)
-    (setq evil-want-C-i-jump nil)
-    (setq evil-want-C-u-scroll t)
-    :ensure t
-    :config
-    (evil-mode 1)    ;; 启用 Evil
-    ;; Use visual line motions even outside of visual-line-mode buffers
-    (evil-global-set-key 'motion "j" 'evil-next-visual-line)
-    (evil-global-set-key 'motion "k" 'evil-previous-visual-line)
-
-    (evil-set-initial-state 'messages-buffer-mode 'normal)
-    (evil-set-initial-state 'dashboard-mode 'normal))                      
-
-  (use-package evil-collection
-  :after evil
-  :config
-  (evil-collection-init))
-
-  ;; evil-nerd-commenter: 快速注释代码
-(use-package evil-nerd-commenter
-  :ensure t
-  :bind
-  ("M-/" . evilnc-comment-or-uncomment-lines)) ;; 绑定注释快捷键
+;; ;; Enable Evil
+;; (use-package evil
+;;   :init
+;;   (setq evil-want-integration t)
+;;   (setq evil-want-keybinding nil)
+;;   (setq evil-want-C-i-jump nil)
+;;   (setq evil-want-C-u-scroll t)
+;;   :ensure t
+;;   :config
+;;   (evil-mode 1)    ;; 启用 Evil
+;;   ;; Use visual line motions even outside of visual-line-mode buffers
+;;   (evil-global-set-key 'motion "j" 'evil-next-visual-line)
+;;   (evil-global-set-key 'motion "k" 'evil-previous-visual-line)
+;; 
+;;   (evil-set-initial-state 'messages-buffer-mode 'normal)
+;;   (evil-set-initial-state 'dashboard-mode 'normal))                      
+;;
+;; (use-package evil-collection
+;; :after evil
+;; :config
+;; (evil-collection-init))
+;;
+;; ;; evil-nerd-commenter: 快速注释代码
+;;(use-package evil-nerd-commenter
+;;  :ensure t
+;;  :bind
+;;  ("M-/" . evilnc-comment-or-uncomment-lines)) ;; 绑定注释快捷键
 
 ;; 安装和配置 Helm
 (use-package helm
@@ -134,19 +134,23 @@
   (setq undo-tree-visualizer-timestamps t) ;; 在可视化器中显示时间戳
   (setq undo-tree-visualizer-diff t) ;; 在可视化器中显示 diff
   :config
-  (global-undo-tree-mode 1) ;; 启用全局 undo-tree
-  ;; 与 evil 模式集成
-  (with-eval-after-load 'evil
-    (define-key evil-normal-state-map (kbd "u") 'undo-tree-undo) ;; 撤销
-    (define-key evil-normal-state-map (kbd "C-r") 'undo-tree-redo))) ;; 重做
+  ;; 启用全局 undo-tree
+  (global-undo-tree-mode 1))
+  ;;;; 与 evil 模式集成
+  ;;(with-eval-after-load 'evil
+  ;;  (define-key evil-normal-state-map (kbd "u") 'undo-tree-undo) ;; 撤销
+  ;;  (define-key evil-normal-state-map (kbd "C-r") 'undo-tree-redo))) ;; 重做
 
 (use-package company
-:ensure t
-:config
-(global-company-mode 1)
-;; company mode 默认选择上一条和下一条候选项命令 M-n M-p
-:bind (("C-n" . company-select-next)
-       ("C-p" . company-select-previous)))
+ :ensure t
+ :init
+ (global-company-mode 1)
+ :config
+ (setq company-idle-delay 0.2
+       company-minimum-prefix-length 1))
+;; ;; company mode 默认选择上一条和下一条候选项命令 M-n M-p
+;; :bind (("C-n" . company-select-next)
+;;        ("C-p" . company-select-previous)))
 
 ;;helm-gtags?
 
@@ -171,7 +175,7 @@
 
 ;; optionally
 (use-package lsp-ui :commands lsp-ui-mode)
-;; if you are helm user
+;; if you are helm usero
 (use-package helm-lsp :commands helm-lsp-workspace-symbol)
 ;; if you are ivy user
 ;;(use-package lsp-ivy :commands lsp-ivy-workspace-symbol)
@@ -185,13 +189,28 @@
 (use-package which-key
     :config
     (which-key-mode))
+
+(use-package magit
+  :ensure t
+  :bind (("C-x g" . magit-status)   ;; 快速打开 magit-status
+         ("C-x M-g" . magit-dispatch) ;; 打开 magit 调度菜单
+         ("C-c M-g" . magit-file-dispatch)) ;; 文件级操作
+  :config
+  (setq magit-display-buffer-function #'magit-display-buffer-fullframe-status-v1)) ;; 全屏显示 magit-status
+
+(use-package wgrep
+:ensure t
+:config
+;; 配置 wgrep
+(setq wgrep-auto-save-buffer t) ;; 自动保存编辑后的结果到文件
+(setq wgrep-enable-key "e"))    ;; 按 `e` 启用 wgrep 模式
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(which-key dap-mode lsp-treemacs helm-lsp lsp-ui lsp-mode vterm vertico undo-tree helpful helm-gtags gruvbox-theme evil-nerd-commenter evil-collection doom-modeline consult-flycheck company ace-jump-mode)))
+   '(wgrep which-key vterm undo-tree magit lsp-ui helpful helm-lsp gruvbox-theme evil-nerd-commenter evil-collection doom-modeline dap-mode company ace-jump-mode)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
