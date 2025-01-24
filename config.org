@@ -1,5 +1,136 @@
 #+title: emacs configuration
 #+PROPERTY: header-args:emacs-lisp :tangle ./init.el :mkdirp yes
+* usage
+** move
+| key bingdings | Description                                                                                             |
+|---------------+---------------------------------------------------------------------------------------------------------|
+| C-v           | Move forward one screenful                                                                              |
+| M-v           | Move backward one screenful                                                                             |
+| C-l           | Clear screen and redisplay all the text, moving the text around the cursor to the center of the screen. |
+
+                                                                         M-<
+                                         				      :
+                                         				      :
+                                         			      Previous line, C-p
+                                         				      :
+                                         				      :
+ M-a(sentence) .... C-a(line) .... M-b(word) .... C-b(char) .... Current cursor position .... C-f .... M-b .... C-e .... M-e
+                                                   			      :
+                                                   			      :
+                                                   		        Next line, C-n
+                                                   			      :
+                                                   			      :
+                                                                         M->
+
+M- expand region
+
+** command
+
+| key bingdings                        | Description                              |
+|--------------------------------------+------------------------------------------|
+| C-x C-c                              | end session                              |
+| C-g                                  | quit a partially entered command         |
+| C-x k                                | kill buffer                              |
+| C-u [digit]/M-[digit] [key bindings] | give a numeric argument to emacs command |
+
+** windows
+
+| key bindings | Description             |
+|--------------+-------------------------|
+| C-x 1        | one window              |
+| C-x 2        | split winodws below     |
+| C-x 3        | split window right      |
+| C-M-v        | scroll the window below |
+| C-x o        | other window            |
+| C-x 4 ?      | operate other window    |
+
+** frames
+
+| key bingdings | Description          |
+|---------------+----------------------|
+| C-x 5 ?       | operate other frames |
+
+** inserting and editing
+
+
+| key bindings | Description                         |
+|--------------+-------------------------------------|
+| <DEL>        | delete char before cursor           |
+| C-d          | delete chat after cursor            |
+| M-<DEL>      | kill word before cursor             |
+| M-d          | kill word after cursor              |
+| C-k          | kill from cursor to end of line     |
+| M-k          | kill from cursor to end of sentence |
+
+*** visual edit
+
+| key bingdings | Description               |
+|---------------+---------------------------|
+| C-<SPC>       | Mark set                  |
+| C-w           | kill selected text        |
+| C-y           | yank                      |
+| M-y           | yank previous killed text |
+
+"killed" text can be reinserted at any position
+
+*** undo
+
+| key bingdings | Description                |
+|---------------+----------------------------|
+| C-/           | undo                       |
+| C-_           | undo                       |
+| C-x u         | undo                       |
+| C-z           | suspend, use fg to go back |
+
+** files
+
+| key bingdings | Description |
+|---------------+-------------|
+| C-x C-f       | find file   |
+| C-x C-s       | save file   |
+
+** buffers
+
+| key bindings | Description                     |
+|--------------+---------------------------------|
+| C-x C-b      | list buffers                    |
+| C-x b        | switch buffer                   |
+| C-x s        | save some buffers to their file |
+
+** exten the command set
+
+| key bingdings | Description          |
+|---------------+----------------------|
+| C-x           | character extend     |
+| M-x           | named command extend |
+
+** help
+
+| key bingdings | Description          |
+|---------------+----------------------|
+| C-h m         | describe mode        |
+| C-h c         | describe key briefly |
+| C-h v         | describe variable    |
+| C-h k         | describe key         |
+| C-h f         | describe function    |
+| C-h x         | describe command     |
+| C-h a         | command apropos      |
+| C-h i         | info manual          |
+
+** searching
+
+| key bingdings | Description    |
+|---------------+----------------|
+| C-s           | forward search |
+| C-r           | reverse search |
+
+** recursive editing levels
+
+| key bingdings   | Description |
+|-----------------+-------------|
+| <ESC><ESC><ESC> | "get out"   |
+
+
 * basic
 
 #+begin_src emacs-lisp

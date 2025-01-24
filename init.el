@@ -204,16 +204,3 @@
 ;; 配置 wgrep
 (setq wgrep-auto-save-buffer t) ;; 自动保存编辑后的结果到文件
 (setq wgrep-enable-key "e"))    ;; 按 `e` 启用 wgrep 模式
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(package-selected-packages
-   '(wgrep which-key vterm undo-tree magit lsp-ui helpful helm-lsp gruvbox-theme evil-nerd-commenter evil-collection doom-modeline dap-mode company ace-jump-mode)))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
