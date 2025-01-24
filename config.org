@@ -7,6 +7,7 @@
 | C-v           | Move forward one screenful                                                                              |
 | M-v           | Move backward one screenful                                                                             |
 | C-l           | Clear screen and redisplay all the text, moving the text around the cursor to the center of the screen. |
+| M-g g         | jump to specified line                                                                                  |
 
                                                                          M-<
                                          				      :
@@ -26,12 +27,21 @@ M- expand region
 
 ** command
 
-| key bingdings                        | Description                              |
-|--------------------------------------+------------------------------------------|
-| C-x C-c                              | end session                              |
-| C-g                                  | quit a partially entered command         |
-| C-x k                                | kill buffer                              |
-| C-u [digit]/M-[digit] [key bindings] | give a numeric argument to emacs command |
+| key bingdings                        | Description                                                    |
+|--------------------------------------+----------------------------------------------------------------|
+| C-x C-c                              | end session                                                    |
+| C-g                                  | quit a partially entered command                               |
+| C-x k                                | kill buffer                                                    |
+| C-u [digit]/M-[digit] [key bindings] | give a numeric argument to emacs command                       |
+| M-:                                  | eval expression                                                |
+| C-h r                                | info-emacs-manual                                              |
+| M-x shell                            |                                                                |
+| M-x complie                          |                                                                |
+| M-x gdb                              |                                                                |
+| M-x grep                             |                                                                |
+| M-x man                              |                                                                |
+| M-x shell-command (M-!)              | execute command and display output                             |
+| M-x shell-command-on-region (M-pipe) | execute command,piping current region as input, dispaly output |
 
 ** windows
 
@@ -61,12 +71,19 @@ M- expand region
 | M-d          | kill word after cursor              |
 | C-k          | kill from cursor to end of line     |
 | M-k          | kill from cursor to end of sentence |
+| M-%          | query-replace(y/n/q/./!/?)          |
+
 
 *** visual edit
 
 | key bingdings | Description               |
 |---------------+---------------------------|
 | C-<SPC>       | Mark set                  |
+| C-x C-x       | swap point and mark       |
+| C-u C-<SPC>   | cycle through mark ring   |
+| C-x h         | "select all"              |
+| M-h           | mark region               |
+| M-w           | "copy"                    |
 | C-w           | kill selected text        |
 | C-y           | yank                      |
 | M-y           | yank previous killed text |
@@ -119,10 +136,17 @@ M- expand region
 
 ** searching
 
-| key bingdings | Description    |
-|---------------+----------------|
-| C-s           | forward search |
-| C-r           | reverse search |
+| key bingdings | Description                                           |
+|---------------+-------------------------------------------------------|
+| C-s           | forward search                                        |
+| C-r           | reverse search                                        |
+| C-x C-x       | jump back to mark                                     |
+| C-s C-s       | search the most recently searched item                |
+| C-s M-p       | previous item in search history                       |
+| C-s M-n       | next item in search history                           |
+| C-h k C-s     | guide                                                 |
+| C-M-s         | regular expression search(M-x re-builder text regexp) |
+| M-x occur     | match the regexp in a separate buffer                 |
 
 ** recursive editing levels
 
@@ -130,6 +154,51 @@ M- expand region
 |-----------------+-------------|
 | <ESC><ESC><ESC> | "get out"   |
 
+** Dired
+
+| key bindings | Description                                       |
+|--------------+---------------------------------------------------|
+| C-x C-q      | wdired-change-to-wdired-mode(Editable Dired mode) |
+| C-x C-s      | "save" renames the indicated files                |
+| M-%          | query-replace                                     |
+
+** keyboard macros
+
+| key bindings | Description                    |
+|--------------+--------------------------------|
+| <F3>         | start recording                |
+| <F4>         | stop recording                 |
+| <F4>         | play back macro once           |
+| M-5 <F4>     | play back macro 5 times        |
+| M-0 <F4>     | play back macro until it fails |
+
+** version control
+
+| key bindings                 | Description                                 |
+|------------------------------+---------------------------------------------|
+| M-x vc-next-action (C-x v v) | commits the current file                    |
+| C-x v =                      | view diff on current file                   |
+| C-x v ~                      | show version of current file                |
+| C-x v g                      | view annotated version of current file(L/D) |
+| C-x v l                      | display a log of previous changes           |
+
+** editing remote files
+
+Tramp
+
+M-: (info "(TRAMP)")
+
+| key bindings                                    | Description |
+|-------------------------------------------------+-------------|
+| C-x C-f /myname@remotehost:/remote/path/to/file |             |
+
+** Emacs server
+
+M-x server-start or (server-start) in init.el
+
+emacsclient -t
+
+and set $EDITOR="emacslient -t"
 
 * basic
 
