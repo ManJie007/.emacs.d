@@ -99,6 +99,13 @@ M- expand region
 | C-x u         | undo                       |
 | C-z           | suspend, use fg to go back |
 
+*** shift
+
+| key bingdings | Description    |
+|---------------+----------------|
+| C-x <TAB>     | indent-rigidly |
+
+
 ** files
 
 | key bingdings | Description |
