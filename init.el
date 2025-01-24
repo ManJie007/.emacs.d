@@ -12,6 +12,9 @@
 ;; 关闭启动帮助画面
 (setq inhibit-splash-screen 1)
 
+(set-face-attribute 'default nil
+                    :height 150)
+
 ;; Initialize package sources
 (require 'package)
 
@@ -48,10 +51,18 @@
               (manjie/org-babel-tangle-config))))
 
 (defun manjie/org-mode-setup ()
-    (org-indent-mode))
+  (org-indent-mode))
 
 (use-package org
-:hook (org-mode . manjie/org-mode-setup))
+:hook (org-mode . manjie/org-mode-setup)
+:config
+(setq org-latex-create-formula-image-program 'dvipng) ;; 使用 dvipng 渲染公式
+(setq org-format-latex-options (plist-put org-format-latex-options :scale 2.0))
+)
+
+  ;; 启用 cdlatex 支持 LaTeX 输入
+(use-package cdlatex
+  :hook (org-mode . turn-on-org-cdlatex)) ;; 在 org-mode 中启用 cdlatex
 
 (use-package helpful
   :ensure t
@@ -140,6 +151,13 @@
   ;;(with-eval-after-load 'evil
   ;;  (define-key evil-normal-state-map (kbd "u") 'undo-tree-undo) ;; 撤销
   ;;  (define-key evil-normal-state-map (kbd "C-r") 'undo-tree-redo))) ;; 重做
+
+(use-package multiple-cursors
+:ensure t
+:bind (("C-S-c C-S-c" . mc/edit-lines)            ;; 激活多行光标
+       ("C->"         . mc/mark-next-like-this)   ;; 标记下一个匹配
+       ("C-<"         . mc/mark-previous-like-this) ;; 标记上一个匹配
+       ("C-c C-<"     . mc/mark-all-like-this)))  ;; 标记所有匹配
 
 (use-package company
  :ensure t
