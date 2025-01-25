@@ -64,6 +64,13 @@
 (use-package cdlatex
   :hook (org-mode . turn-on-org-cdlatex)) ;; 在 org-mode 中启用 cdlatex
 
+;; 启用 Org Babel 对 Python 的支持
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((python . t)
+   (dot . t)      ;; 启用 Graphviz
+   )) ;; 启用 Python
+
 (use-package helpful
   :ensure t
   ;; 快捷键绑定
@@ -118,6 +125,9 @@
   :init
   ;; 基础初始化设置
   (setq helm-move-to-line-cycle-in-source t)  ;; 循环浏览候选项
+  (setq helm-M-x-fuzzy-match t) ;; 启用 M-x 模糊匹配
+  (setq helm-buffers-fuzzy-matching t)
+  (setq helm-recentf-fuzzy-match t)
   :config
   ;; 加载核心配置并启用 Helm
   (helm-mode 1)
@@ -127,7 +137,9 @@
          ("C-s" . helm-occur)                ;; 切换缓冲区
          ("C-x C-f" . helm-find-files)        ;; 查找文件
          ("C-x b" . helm-mini)                ;; 切换缓冲区
+         ("C-x r b" . helm-filtered-bookmarks) ;; 管理书签
          ("M-y" . helm-show-kill-ring)        ;; 剪贴板历史
+         ("C-h r" . helm-info-emacs) ;; 打开 Emacs 帮助文档
          ("C-c h o" . helm-occur)))           ;; 搜索当前缓冲区内容
 
 (use-package doom-modeline
