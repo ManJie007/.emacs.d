@@ -291,6 +291,7 @@ and set $EDITOR="emacslient -t"
   :config
   (setq org-latex-create-formula-image-program 'dvipng) ;; 使用 dvipng 渲染公式
   (setq org-format-latex-options (plist-put org-format-latex-options :scale 2.0))
+  (setq org-image-actual-width 300) ;; 默认显示宽度为 300 像素
   )
 
     ;; 启用 cdlatex 支持 LaTeX 输入
