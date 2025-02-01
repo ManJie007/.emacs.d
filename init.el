@@ -242,3 +242,10 @@
 ;; 配置 wgrep
 (setq wgrep-auto-save-buffer t) ;; 自动保存编辑后的结果到文件
 (setq wgrep-enable-key "e"))    ;; 按 `e` 启用 wgrep 模式
+
+(use-package projectile
+  :ensure t
+  :config
+  (projectile-mode +1)
+  :bind-keymap
+  ("C-c p" . projectile-command-map))

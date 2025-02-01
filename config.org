@@ -547,3 +547,15 @@ and set $EDITOR="emacslient -t"
   (setq wgrep-enable-key "e"))    ;; 按 `e` 启用 wgrep 模式
 
 #+end_src
+* Project management
+
+#+begin_src emacs-lisp
+
+(use-package projectile
+  :ensure t
+  :config
+  (projectile-mode +1)
+  :bind-keymap
+  ("C-c p" . projectile-command-map))
+
+#+end_src
