@@ -207,6 +207,7 @@ and set $EDITOR="emacslient -t"
 * basic
 
 #+begin_src emacs-lisp
+  (setq package-check-signature nil)
   ;; 关闭工具栏，tool-bar-mode 即为一个 Minor Mode
   (tool-bar-mode -1)
 
@@ -220,6 +221,12 @@ and set $EDITOR="emacslient -t"
 
   ;; 关闭启动帮助画面
   (setq inhibit-splash-screen 1)
+
+  ;;窗口布局管理
+  (winner-mode t)
+
+  ;;允许通过方向键快速切换窗口
+  (windmove-default-keybindings)
 
 #+end_src
 

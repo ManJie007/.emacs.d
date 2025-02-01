@@ -1,3 +1,4 @@
+(setq package-check-signature nil)
 ;; 关闭工具栏，tool-bar-mode 即为一个 Minor Mode
 (tool-bar-mode -1)
 
@@ -11,6 +12,12 @@
 
 ;; 关闭启动帮助画面
 (setq inhibit-splash-screen 1)
+
+;;窗口布局管理
+(winner-mode t)
+
+;;允许通过方向键快速切换窗口
+(windmove-default-keybindings)
 
 (set-face-attribute 'default nil
                     :height 150)
@@ -235,16 +242,3 @@
 ;; 配置 wgrep
 (setq wgrep-auto-save-buffer t) ;; 自动保存编辑后的结果到文件
 (setq wgrep-enable-key "e"))    ;; 按 `e` 启用 wgrep 模式
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(custom-safe-themes
-   '("8363207a952efb78e917230f5a4d3326b2916c63237c1f61d7e5fe07def8d378" "5a0ddbd75929d24f5ef34944d78789c6c3421aa943c15218bac791c199fc897d" "51fa6edfd6c8a4defc2681e4c438caf24908854c12ea12a1fbfd4d055a9647a3" "18a1d83b4e16993189749494d75e6adb0e15452c80c431aca4a867bcc8890ca9" "75b371fce3c9e6b1482ba10c883e2fb813f2cc1c88be0b8a1099773eb78a7176" default)))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
