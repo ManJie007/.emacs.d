@@ -179,6 +179,10 @@
        ("C-<"         . mc/mark-previous-like-this) ;; 标记上一个匹配
        ("C-c C-<"     . mc/mark-all-like-this)))  ;; 标记所有匹配
 
+(use-package expand-region
+:ensure t
+:bind ("C-=" . er/expand-region))
+
 (use-package company
  :ensure t
  :init

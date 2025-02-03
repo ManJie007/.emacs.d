@@ -455,6 +455,15 @@ and set $EDITOR="emacslient -t"
          ("C-c C-<"     . mc/mark-all-like-this)))  ;; 标记所有匹配
 
 #+end_src
+** Quotes & Parenthesis & Delimiters Handling
+*** Select
+
+#+begin_src emacs-lisp
+  (use-package expand-region
+  :ensure t
+  :bind ("C-=" . er/expand-region))
+#+end_src
+
 * Programming
 ** Completion
 
