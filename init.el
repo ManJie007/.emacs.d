@@ -87,17 +87,25 @@
 	     ("C-h k" . helpful-key)
 	     ("C-h x" . helpful-command)))
 
+(winner-mode 1)
+
+;;允许通过方向键快速切换窗口
+(windmove-default-keybindings)
+
 (tab-bar-mode 1)
 
-(use-package ace-jump-mode
+(use-package avy
   :ensure t
   :bind
-  (("C-c SPC" . ace-jump-mode)) ;; 可以绑定到您喜欢的快捷键
-  :config
-  (ace-jump-mode 1))
-  ;;;; 如果使用 evil 模式，可以绑定到 normal 模式下的快捷键
-  ;;(with-eval-after-load 'evil
-  ;;  (define-key evil-normal-state-map (kbd "SPC SPC") 'ace-jump-mode)))
+  (("M-s c" . avy-goto-char)) ;; 可以绑定到您喜欢的快捷键
+)
+
+(use-package imenu-list
+:ensure t
+:bind (("M-g l" . imenu-list-smart-toggle))
+:config
+(setq imenu-list-focus-after-activation t)
+(setq imenu-list-auto-resize t))
 
 ;; ;; Enable Evil
 ;; (use-package evil
@@ -148,29 +156,14 @@
          ("C-x r b" . helm-filtered-bookmarks) ;; 管理书签
          ("M-y" . helm-show-kill-ring)        ;; 剪贴板历史
          ("C-h r" . helm-info-emacs) ;; 打开 Emacs 帮助文档
-         ("C-c h o" . helm-occur)))           ;; 搜索当前缓冲区内容
+         ("C-c h o" . helm-occur)
+         ("M-g i" . helm-imenu)))           ;; 搜索当前缓冲区内容
 
 (use-package doom-modeline
   :ensure t
   :init (doom-modeline-mode 1)
   :config
   (setq doom-modeline-icon nil))
-
-;; undo-tree 配置
-(use-package undo-tree
-  :ensure t
-  :init
-  (setq undo-tree-auto-save-history t) ;; 自动保存 undo-tree 的历史记录
-  (setq undo-tree-history-directory-alist '(("." . "~/.emacs.d/undo"))) ;; 设置历史记录存储位置
-  (setq undo-tree-visualizer-timestamps t) ;; 在可视化器中显示时间戳
-  (setq undo-tree-visualizer-diff t) ;; 在可视化器中显示 diff
-  :config
-  ;; 启用全局 undo-tree
-  (global-undo-tree-mode 1))
-  ;;;; 与 evil 模式集成
-  ;;(with-eval-after-load 'evil
-  ;;  (define-key evil-normal-state-map (kbd "u") 'undo-tree-undo) ;; 撤销
-  ;;  (define-key evil-normal-state-map (kbd "C-r") 'undo-tree-redo))) ;; 重做
 
 (use-package multiple-cursors
 :ensure t
@@ -183,13 +176,26 @@
 :ensure t
 :bind ("C-=" . er/expand-region))
 
+;; undo-tree 配置
+(use-package undo-tree
+  :ensure t
+  :init
+  (setq undo-tree-auto-save-history t) ;; 自动保存 undo-tree 的历史记录
+  (setq undo-tree-history-directory-alist '(("." . "~/.emacs.d/undo"))) ;; 设置历史记录存储位置
+  (setq undo-tree-visualizer-timestamps t) ;; 在可视化器中显示时间戳
+  (setq undo-tree-visualizer-diff t) ;; 在可视化器中显示 diff
+  :config
+  ;; 启用全局 undo-tree
+  (global-undo-tree-mode 1))
+
 (use-package company
  :ensure t
  :init
  (global-company-mode 1)
  :config
  (setq company-idle-delay 0.2
-       company-minimum-prefix-length 1))
+       company-minimum-prefix-length 1
+       company-selection-wrap-around t)) ;;允许循环选择补全
 ;; ;; company mode 默认选择上一条和下一条候选项命令 M-n M-p
 ;; :bind (("C-n" . company-select-next)
 ;;        ("C-p" . company-select-previous)))
@@ -205,12 +211,25 @@
 ;;
 ;;(add-hook 'after-save-hook #'my/update-gtags)
 
+(defun update-tags ()
+  "在项目根目录重新生成 TAGS 文件."
+  (interactive)
+  (shell-command "find . -regex '.*\\(c\\|h\\|cpp\\|py\\|java\\|js\\|ts\\|sh\\|php\\|rb\\)' | etags -"))
+
 (use-package lsp-mode
   :init
   ;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
   (setq lsp-keymap-prefix "C-c l")
   :hook (;; replace XXX-mode with concrete major-mode(e. g. python-mode)
          (python-mode . lsp)
+         (c-mode . lsp)
+         (c++-mode . lsp)
+         (go-mode . lsp)
+         (rust-mode . lsp)
+         (html-mode . lsp)
+         (css-mode . lsp)
+         (js-mode . lsp)
+         (typescript-mode . lsp)           
          ;; if you want which-key integration
          (lsp-mode . lsp-enable-which-key-integration))
   :commands lsp)
@@ -232,6 +251,20 @@
     :config
     (which-key-mode))
 
+(use-package lsp-pyright
+:ensure t
+:custom (lsp-pyright-langserver-command "pyright") ;; or basedpyright
+:hook (python-mode . (lambda ()
+                        (require 'lsp-pyright)
+                        (lsp))))  ; or lsp-deferred
+
+(use-package projectile
+  :ensure t
+  :config
+  (projectile-mode +1)
+  :bind-keymap
+  ("C-c p" . projectile-command-map))
+
 (use-package magit
   :ensure t
   :bind (("C-x g" . magit-status)   ;; 快速打开 magit-status
@@ -246,10 +279,3 @@
 ;; 配置 wgrep
 (setq wgrep-auto-save-buffer t) ;; 自动保存编辑后的结果到文件
 (setq wgrep-enable-key "e"))    ;; 按 `e` 启用 wgrep 模式
-
-(use-package projectile
-  :ensure t
-  :config
-  (projectile-mode +1)
-  :bind-keymap
-  ("C-c p" . projectile-command-map))

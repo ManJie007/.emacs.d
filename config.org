@@ -563,7 +563,28 @@ and set $EDITOR="emacslient -t"
                           (lsp))))  ; or lsp-deferred
 #+end_src
 
-** Version control
+** Debugging
+
+TODO
+
+** Document
+
+TODO
+
+* Project management
+
+#+begin_src emacs-lisp
+
+(use-package projectile
+  :ensure t
+  :config
+  (projectile-mode +1)
+  :bind-keymap
+  ("C-c p" . projectile-command-map))
+
+#+end_src
+
+* Version control
 
 #+begin_src emacs-lisp
 (use-package magit
@@ -575,8 +596,8 @@ and set $EDITOR="emacslient -t"
   (setq magit-display-buffer-function #'magit-display-buffer-fullframe-status-v1)) ;; 全屏显示 magit-status
 #+end_src
 
-** Integration
-*** Search
+* Integration
+** Search
 
 #+begin_src emacs-lisp
 
@@ -586,17 +607,5 @@ and set $EDITOR="emacslient -t"
   ;; 配置 wgrep
   (setq wgrep-auto-save-buffer t) ;; 自动保存编辑后的结果到文件
   (setq wgrep-enable-key "e"))    ;; 按 `e` 启用 wgrep 模式
-
-#+end_src
-* Project management
-
-#+begin_src emacs-lisp
-
-(use-package projectile
-  :ensure t
-  :config
-  (projectile-mode +1)
-  :bind-keymap
-  ("C-c p" . projectile-command-map))
 
 #+end_src
