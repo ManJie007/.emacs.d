@@ -45,6 +45,20 @@
   :config
   (load-theme 'gruvbox-dark-soft t))
 
+(use-package dashboard
+  :ensure t
+  :config
+  (dashboard-setup-startup-hook)
+  (setq dashboard-startup-banner "~/.emacs.d/mybanner.txt")
+  (setq dashboard-center-content t) ;; 内容居中
+  (setq dashboard-items '((recents  . 5)    ;; 最近打开的文件
+                          (bookmarks . 5)   ;; 书签
+                          (projects . 5)    ;; projectile 项目
+                          (agenda . 5)))    ;; 近期日程
+  (setq dashboard-set-navigator t)     ;; 显示快捷导航
+  (setq dashboard-footer-messages '("Welcome to Emacs!"))
+  (setq dashboard-set-footer nil))     ;; 关闭默认 footer
+
 (use-package helpful
   :ensure t
   ;; 快捷键绑定
