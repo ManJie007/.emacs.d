@@ -40,44 +40,10 @@
 (require 'use-package)
 (setq use-package-always-ensure t)
 
-(load-theme 'gruvbox-dark-soft t)
-
-;; Automatically tangle our Emacs.org config file when we save it
-(defun manjie/org-babel-tangle-config ()
-  (when (string-equal (buffer-file-name)
-		      (expand-file-name "~/.emacs.d/config.org"))
-    ;; Dynamic scoping to the rescue
-    (let ((org-confirm-babel-evaluate nil))
-      (org-babel-tangle))))
-
-;;(add-hook 'org-mode-hook (lambda () (add-hook 'after-save-hook 'manjie/org-babel-tangle-config)))
-(add-hook 'after-save-hook
-          (lambda ()
-            (when (string-equal (buffer-file-name)
-                                (expand-file-name "~/.emacs.d/config.org"))
-              (manjie/org-babel-tangle-config))))
-
-(defun manjie/org-mode-setup ()
-  (org-indent-mode))
-
-(use-package org
-:hook (org-mode . manjie/org-mode-setup)
-:config
-(setq org-latex-create-formula-image-program 'dvipng) ;; 使用 dvipng 渲染公式
-(setq org-format-latex-options (plist-put org-format-latex-options :scale 2.0))
-(setq org-image-actual-width 300) ;; 默认显示宽度为 300 像素
-)
-
-  ;; 启用 cdlatex 支持 LaTeX 输入
-(use-package cdlatex
-  :hook (org-mode . turn-on-org-cdlatex)) ;; 在 org-mode 中启用 cdlatex
-
-;; 启用 Org Babel 对 Python 的支持
-(org-babel-do-load-languages
- 'org-babel-load-languages
- '((python . t)
-   (dot . t)      ;; 启用 Graphviz
-   )) ;; 启用 Python
+(use-package gruvbox-theme
+  :ensure t
+  :config
+  (load-theme 'gruvbox-dark-soft t))
 
 (use-package helpful
   :ensure t
@@ -265,6 +231,58 @@
   :bind-keymap
   ("C-c p" . projectile-command-map))
 
+;; Automatically tangle our Emacs.org config file when we save it
+(defun manjie/org-babel-tangle-config ()
+  (when (string-equal (buffer-file-name)
+		      (expand-file-name "~/.emacs.d/config.org"))
+    ;; Dynamic scoping to the rescue
+    (let ((org-confirm-babel-evaluate nil))
+      (org-babel-tangle))))
+
+;;(add-hook 'org-mode-hook (lambda () (add-hook 'after-save-hook 'manjie/org-babel-tangle-config)))
+(add-hook 'after-save-hook
+          (lambda ()
+            (when (string-equal (buffer-file-name)
+                                (expand-file-name "~/.emacs.d/config.org"))
+              (manjie/org-babel-tangle-config))))
+
+(defun manjie/org-mode-setup ()
+  (org-indent-mode))
+
+(use-package org
+:hook (org-mode . manjie/org-mode-setup)
+:config
+(setq org-latex-create-formula-image-program 'dvipng) ;; 使用 dvipng 渲染公式
+(setq org-format-latex-options (plist-put org-format-latex-options :scale 2.0))
+(setq org-image-actual-width 300) ;; 默认显示宽度为 300 像素
+(setq org-directory "~/org")  ;; 设置 Org 文件存放目录
+(setq org-default-notes-file (concat org-directory "/notes.org"))
+)
+
+;; 启用 cdlatex 支持 LaTeX 输入
+(use-package cdlatex
+  :hook (org-mode . turn-on-org-cdlatex)) ;; 在 org-mode 中启用 cdlatex
+
+;;Org Agenda
+(setq org-agenda-files '("~/org/tasks.org" "~/org/projects.org"))
+(global-set-key (kbd "C-c a") 'org-agenda) ;; 绑定快捷键
+
+;; 启用 Org Babel 对 Python 的支持
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((python . t)
+   (dot . t)      ;; 启用 Graphviz
+   (emacs-lisp . t)
+   )) ;; 启用 Python
+
+;;美化列表符号
+(use-package org-bullets
+:ensure t
+:hook (org-mode . org-bullets-mode))
+
+(setq org-todo-keywords
+    '((sequence "TODO(t)" "IN-PROGRESS(i)" "WAITING(w)" "|" "DONE(d)" "CANCELLED(c)")))
+
 (use-package magit
   :ensure t
   :bind (("C-x g" . magit-status)   ;; 快速打开 magit-status
@@ -273,9 +291,33 @@
   :config
   (setq magit-display-buffer-function #'magit-display-buffer-fullframe-status-v1)) ;; 全屏显示 magit-status
 
-(use-package wgrep
-:ensure t
-:config
-;; 配置 wgrep
-(setq wgrep-auto-save-buffer t) ;; 自动保存编辑后的结果到文件
-(setq wgrep-enable-key "e"))    ;; 按 `e` 启用 wgrep 模式
+(use-package vterm
+  :ensure )
+
+;;按 C-c t 可以打开/关闭 vterm，类似于 Guake 终端
+(use-package vterm-toggle
+  :ensure t
+  :bind (("C-c t" . vterm-toggle)))
+
+(setq vterm-term-environment-variable "xterm-256color")
+
+(use-package helm-ag
+  :ensure t
+  :config
+  (setq helm-ag-base-command "rg --no-heading --smart-case") ;; 让 helm-ag 使用 ripgrep
+  (setq helm-ag-insert-at-point 'symbol) ;; 默认使用光标处的单词作为搜索关键字
+  (setq helm-ag-fuzzy-match t)) ;; 启用模糊匹配
+
+(global-set-key (kbd "C-c g") 'helm-ag) ;; 当前目录搜索
+(global-set-key (kbd "C-c G") 'helm-do-ag) ;; 交互式搜索
+;;(global-set-key (kbd "C-c p g") 'helm-projectile-ag) ;; 在 `projectile` 项目中搜索
+
+ (use-package wgrep
+ :ensure t
+ :config
+ ;; 配置 wgrep
+ (setq wgrep-auto-save-buffer t) ;; 自动保存编辑后的结果到文件
+ (setq wgrep-enable-key "e"))    ;; 按 `e` 启用 wgrep 模式
+
+(use-package wgrep-ag
+:ensure t)
