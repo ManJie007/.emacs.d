@@ -244,6 +244,10 @@
   :config
   (setq rust-format-on-save t))
 
+(use-package flycheck
+:ensure t
+:init (global-flycheck-mode))
+
 (use-package projectile
   :ensure t
   :config
@@ -347,7 +351,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(rust-mode which-key wgrep-ag vterm-toggle undo-tree projectile org-modern org-bullets multiple-cursors magit lsp-ui lsp-pyright imenu-list helpful helm-lsp helm-ag gruvbox-theme expand-region doom-modeline dashboard dap-mode company cdlatex)))
+   '(flycheck which-key wgrep-ag vterm-toggle undo-tree rust-mode projectile org-modern org-bullets multiple-cursors magit lsp-ui lsp-pyright imenu-list helpful helm-lsp helm-ag gruvbox-theme expand-region doom-modeline dashboard dap-mode company cdlatex)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

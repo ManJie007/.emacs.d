@@ -544,6 +544,16 @@ and set $EDITOR="emacslient -t"
 
 TODO
 
+** Error Checking
+
+#+begin_src emacs-lisp
+
+  (use-package flycheck
+  :ensure t
+  :init (global-flycheck-mode))
+
+#+end_src
+
 ** Document
 
 TODO
