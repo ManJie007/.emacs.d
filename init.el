@@ -165,6 +165,14 @@
   ;; 启用全局 undo-tree
   (global-undo-tree-mode 1))
 
+(use-package yasnippet
+  :ensure t
+  :config
+  (yas-global-mode 1))
+
+(use-package yasnippet-snippets
+  :ensure t)
+
 (use-package company
  :ensure t
  :init
@@ -342,3 +350,16 @@
 
 (use-package wgrep-ag
 :ensure t)
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   '(yasnippet-snippets yasnippet which-key wgrep-ag vterm-toggle undo-tree rust-mode projectile org-modern org-bullets multiple-cursors magit lsp-ui lsp-pyright imenu-list helpful helm-lsp helm-ag gruvbox-theme flycheck expand-region doom-modeline dashboard dap-mode company cdlatex)))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
