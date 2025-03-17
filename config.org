@@ -222,11 +222,8 @@ and set $EDITOR="emacslient -t"
   ;; 关闭启动帮助画面
   (setq inhibit-splash-screen 1)
 
-  ;;窗口布局管理
-  (winner-mode t)
-
-  ;;允许通过方向键快速切换窗口
-  (windmove-default-keybindings)
+  ;;y-or-n-p 代替 yes or no
+  (setq use-short-answers t)
 
 #+end_src
 

@@ -13,11 +13,8 @@
 ;; 关闭启动帮助画面
 (setq inhibit-splash-screen 1)
 
-;;窗口布局管理
-(winner-mode t)
-
-;;允许通过方向键快速切换窗口
-(windmove-default-keybindings)
+;;y-or-n-p 代替 yes or no
+(setq use-short-answers t)
 
 (set-face-attribute 'default nil
                     :height 150)
@@ -345,16 +342,3 @@
 
 (use-package wgrep-ag
 :ensure t)
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(package-selected-packages
-   '(flycheck which-key wgrep-ag vterm-toggle undo-tree rust-mode projectile org-modern org-bullets multiple-cursors magit lsp-ui lsp-pyright imenu-list helpful helm-lsp helm-ag gruvbox-theme expand-region doom-modeline dashboard dap-mode company cdlatex)))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
