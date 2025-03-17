@@ -238,6 +238,12 @@
                         (require 'lsp-pyright)
                         (lsp))))  ; or lsp-deferred
 
+(use-package rust-mode
+  :ensure t
+  :hook (rust-mode . lsp)
+  :config
+  (setq rust-format-on-save t))
+
 (use-package projectile
   :ensure t
   :config
@@ -335,3 +341,16 @@
 
 (use-package wgrep-ag
 :ensure t)
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   '(rust-mode which-key wgrep-ag vterm-toggle undo-tree projectile org-modern org-bullets multiple-cursors magit lsp-ui lsp-pyright imenu-list helpful helm-lsp helm-ag gruvbox-theme expand-region doom-modeline dashboard dap-mode company cdlatex)))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )

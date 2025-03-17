@@ -532,6 +532,12 @@ and set $EDITOR="emacslient -t"
   :hook (python-mode . (lambda ()
                           (require 'lsp-pyright)
                           (lsp))))  ; or lsp-deferred
+
+  (use-package rust-mode
+    :ensure t
+    :hook (rust-mode . lsp)
+    :config
+    (setq rust-format-on-save t))
 #+end_src
 
 ** Debugging
