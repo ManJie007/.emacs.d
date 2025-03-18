@@ -275,42 +275,67 @@
                                 (expand-file-name "~/.emacs.d/config.org"))
               (manjie/org-babel-tangle-config))))
 
+;;定义 org 目录
+(setq org-directory "~/org/")
+
 (defun manjie/org-mode-setup ()
   (org-indent-mode))
 
 (use-package org
 :hook (org-mode . manjie/org-mode-setup)
+:init
+;;Org Agenda
+(setq org-agenda-files (directory-files-recursively org-directory "\\.org$"))
 :config
+;;org中latex相关配置
 (setq org-latex-create-formula-image-program 'dvipng) ;; 使用 dvipng 渲染公式
 (setq org-format-latex-options (plist-put org-format-latex-options :scale 2.0))
+
+;;org中图片设置
 (setq org-image-actual-width 300) ;; 默认显示宽度为 300 像素
-(setq org-directory "~/org")  ;; 设置 Org 文件存放目录
-(setq org-default-notes-file (concat org-directory "/notes.org"))
+
+;;org TODO Keywords
+(setq org-todo-keywords
+  '((sequence "TODO(t)" "IN-PROGRESS(i)" "WAITING(w)" "|" "DONE(d)" "CANCELLED(c)")))
+
+;; capture 模板配置
+(setq org-capture-templates
+      '(("t" "add TODO" entry
+         (file+headline "~/org/tasks.org" "TODOList")
+         "* TODO %?\n  CREATED: %U\n")
+        ("n" "add notes" entry
+         (file+headline "~/org/notes.org" "Notes")
+         "* %?\n  CREATED: %U\n")
+        ("j" "add journal" entry
+         (file+datetree "~/org/journal.org")
+         "* %?\nEntered on %U\n")
+        ("T" "add TODO with deadline" entry
+         (file+headline "~/org/tasks.org" "TODOList")
+         "* TODO %?\n  CREATED: %U\nDEADLINE: %^{Deadline}t\n")))
+
+;;org-capture 快捷键配置
+(global-set-key (kbd "C-c c") 'org-capture)
+;;org-agenda 快捷键配置
+(global-set-key (kbd "C-c a") 'org-agenda) ;; 绑定快捷键
 )
 
 ;; 启用 cdlatex 支持 LaTeX 输入
 (use-package cdlatex
   :hook (org-mode . turn-on-org-cdlatex)) ;; 在 org-mode 中启用 cdlatex
 
-;;Org Agenda
-(setq org-agenda-files '("~/org/tasks.org" "~/org/projects.org"))
-(global-set-key (kbd "C-c a") 'org-agenda) ;; 绑定快捷键
-
-;; 启用 Org Babel 对 Python 的支持
-(org-babel-do-load-languages
- 'org-babel-load-languages
- '((python . t)
-   (dot . t)      ;; 启用 Graphviz
-   (emacs-lisp . t)
-   )) ;; 启用 Python
+(with-eval-after-load 'org  
+  ;; 启用 Org Babel 对 language 的支持
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '((python . t)
+     (dot . t)      ;; 启用 Graphviz
+     (emacs-lisp . t)
+     )))
 
 ;;美化列表符号
 (use-package org-bullets
 :ensure t
 :hook (org-mode . org-bullets-mode))
-
-(setq org-todo-keywords
-    '((sequence "TODO(t)" "IN-PROGRESS(i)" "WAITING(w)" "|" "DONE(d)" "CANCELLED(c)")))
 
 (use-package magit
   :ensure t
@@ -350,16 +375,3 @@
 
 (use-package wgrep-ag
 :ensure t)
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(package-selected-packages
-   '(yasnippet-snippets yasnippet which-key wgrep-ag vterm-toggle undo-tree rust-mode projectile org-modern org-bullets multiple-cursors magit lsp-ui lsp-pyright imenu-list helpful helm-lsp helm-ag gruvbox-theme flycheck expand-region doom-modeline dashboard dap-mode company cdlatex)))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
