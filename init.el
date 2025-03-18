@@ -300,18 +300,20 @@
 
 ;; capture 模板配置
 (setq org-capture-templates
-      '(("t" "add TODO" entry
-         (file+headline "~/org/tasks.org" "TODOList")
-         "* TODO %?\n  CREATED: %U\n")
-        ("n" "add notes" entry
-         (file+headline "~/org/notes.org" "Notes")
-         "* %?\n  CREATED: %U\n")
-        ("j" "add journal" entry
-         (file+datetree "~/org/journal.org")
-         "* %?\nEntered on %U\n")
-        ("T" "add TODO with deadline" entry
-         (file+headline "~/org/tasks.org" "TODOList")
-         "* TODO %?\n  CREATED: %U\nDEADLINE: %^{Deadline}t\n")))
+      '(
+        ;;todo
+        ("t" "TODO" entry
+         (file "~/org/tasks.org")
+         "* TODO %?\n:%^{tag}:\nCREATED: %U\nDEADLINE: %^{Deadline}t\n")
+
+        ("d" "daily report" entry
+         (file+datetree "~/org/reports.org")
+         "* Daily Report\n:daily_report:%^{Tag}:\nCREATED: %U\n\n%?\n")
+
+        ("w" "Weekly Report" entry
+         (file+datetree "~/org/reports.org")
+         "* Weekly Report\n:weekly_report:%^{Tag}:\nCREATED: %U\n\nCompleted This Week:\n- %?\n\nPlans for Next Week:\n- \n\nIssues & Thoughts:\n- \n")
+        ))
 
 ;;org-capture 快捷键配置
 (global-set-key (kbd "C-c c") 'org-capture)
