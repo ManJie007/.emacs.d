@@ -71,18 +71,21 @@
 
 (tab-bar-mode 1)
 
-(use-package avy
-  :ensure t
-  :bind
-  (("M-s c" . avy-goto-char)) ;; 可以绑定到您喜欢的快捷键
-)
+(use-package ace-window
+  :bind ("M-o" . ace-window))
 
-(use-package imenu-list
-:ensure t
-:bind (("M-g l" . imenu-list-smart-toggle))
-:config
-(setq imenu-list-focus-after-activation t)
-(setq imenu-list-auto-resize t))
+(use-package avy
+    :ensure t
+    :bind
+    (("M-s c" . avy-goto-char)) ;; 可以绑定到您喜欢的快捷键
+  )
+
+  (use-package imenu-list
+  :ensure t
+  :bind (("M-g l" . imenu-list-smart-toggle))
+  :config
+  (setq imenu-list-focus-after-activation t)
+  (setq imenu-list-auto-resize t))
 
 ;; ;; Enable Evil
 ;; (use-package evil
