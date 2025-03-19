@@ -380,3 +380,5 @@
 
 (use-package wgrep-ag
 :ensure t)
+
+(global-set-key (kbd "C-c w") 'eww)

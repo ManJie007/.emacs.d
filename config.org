@@ -742,4 +742,13 @@ TODO
 #+end_src
 
 * TODO Latex
+* Internet
+** Browser
+
+#+begin_src emacs-lisp
+
+  (global-set-key (kbd "C-c w") 'eww)
+
+#+end_src
+
 * TODO DevOps
