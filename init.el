@@ -40,7 +40,7 @@
 (use-package doom-themes
 :ensure t
 :config
-(load-theme 'doom-one t) ;; 你可以换成 doom-dracula, doom-solarized-dark 等
+(load-theme 'doom-gruvbox t) ;; 你可以换成 doom-dracula, doom-solarized-dark 等
 (doom-themes-org-config)) ;; 优化 org-mode 配色和样式
 
 (use-package dashboard
