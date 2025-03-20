@@ -543,6 +543,7 @@ and set $EDITOR="emacslient -t"
   (dap-ui-controls-mode 1)
 
   ;;dap-python
+  ;;pip install debugpy
   (require 'dap-python)
   (setq dap-python-debugger 'debugpy)
   (setq dap-python-executable "python3"))
@@ -552,19 +553,42 @@ and set $EDITOR="emacslient -t"
   (use-package which-key
       :config
       (which-key-mode))
+#+end_src
+
+*** python
+
+#+begin_src emacs-lisp
 
   (use-package lsp-pyright
   :ensure t
   :custom (lsp-pyright-langserver-command "pyright") ;; or basedpyright
   :hook (python-mode . (lambda ()
                           (require 'lsp-pyright)
-                          (lsp))))  ; or lsp-deferred
+                          (lsp))))  ; or lsp-deferred  
 
+#+end_src
+
+*** rust
+
+#+begin_src emacs-lisp
   (use-package rust-mode
     :ensure t
     :hook (rust-mode . lsp)
     :config
     (setq rust-format-on-save t))
+#+end_src
+
+*** go
+
+#+begin_src emacs-lisp
+
+(use-package go-mode
+  :ensure t
+  :hook ((go-mode . lsp)             ;; 直接 lsp，启动更快
+         (before-save . gofmt-before-save)) ;; 保存时自动格式化
+  :config
+  (setq gofmt-command "goimports"))  ;; 用 goimports 替代 gofmt，自动加 import
+
 #+end_src
 
 ** Debugging

@@ -243,6 +243,7 @@
 (dap-ui-controls-mode 1)
 
 ;;dap-python
+;;pip install debugpy
 (require 'dap-python)
 (setq dap-python-debugger 'debugpy)
 (setq dap-python-executable "python3"))
@@ -265,6 +266,13 @@
   :hook (rust-mode . lsp)
   :config
   (setq rust-format-on-save t))
+
+(use-package go-mode
+  :ensure t
+  :hook ((go-mode . lsp)             ;; 直接 lsp，启动更快
+         (before-save . gofmt-before-save)) ;; 保存时自动格式化
+  :config
+  (setq gofmt-command "goimports"))  ;; 用 goimports 替代 gofmt，自动加 import
 
 (use-package flycheck
 :ensure t
@@ -410,3 +418,16 @@
 (setq gc-cons-threshold (* 50 1000 1000))  ;; 50 MB
 ;;进程输出缓冲大小
 (setq read-process-output-max (* 1024 1024))  ;; 1 MB
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   '(go-mode yasnippet-snippets which-key wgrep-ag vterm-toggle undo-tree rust-mode projectile org-modern org-bullets multiple-cursors magit lsp-ui lsp-pyright imenu-list helpful helm-lsp helm-ag gruvbox-theme google-translate flycheck expand-region doom-themes doom-modeline dashboard dap-mode company cdlatex)))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
