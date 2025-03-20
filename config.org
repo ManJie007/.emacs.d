@@ -533,7 +533,19 @@ and set $EDITOR="emacslient -t"
   (use-package lsp-treemacs :commands lsp-treemacs-errors-list)
 
   ;; optionally if you want to use debugger
-  (use-package dap-mode)
+  (use-package dap-mode
+  :after lsp-mode
+  :config
+  (dap-mode 1)
+  (dap-auto-configure-mode)
+  (dap-ui-mode)
+  (dap-tooltip-mode 1)
+  (dap-ui-controls-mode 1)
+
+  ;;dap-python
+  (require 'dap-python)
+  (setq dap-python-debugger 'debugpy)
+  (setq dap-python-executable "python3"))
   ;; (use-package dap-LANGUAGE) to load the dap adapter for your language
 
   ;; optional if you want which-key integration

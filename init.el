@@ -233,7 +233,19 @@
 (use-package lsp-treemacs :commands lsp-treemacs-errors-list)
 
 ;; optionally if you want to use debugger
-(use-package dap-mode)
+(use-package dap-mode
+:after lsp-mode
+:config
+(dap-mode 1)
+(dap-auto-configure-mode)
+(dap-ui-mode)
+(dap-tooltip-mode 1)
+(dap-ui-controls-mode 1)
+
+;;dap-python
+(require 'dap-python)
+(setq dap-python-debugger 'debugpy)
+(setq dap-python-executable "python3"))
 ;; (use-package dap-LANGUAGE) to load the dap adapter for your language
 
 ;; optional if you want which-key integration
@@ -393,16 +405,3 @@
          ("M-s T" . google-translate-query-translate)))
 
 (global-set-key (kbd "C-c w") 'eww)
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(package-selected-packages
-   '(google-translate yasnippet-snippets which-key wgrep-ag vterm-toggle undo-tree rust-mode projectile org-modern org-bullets multiple-cursors magit lsp-ui lsp-pyright imenu-list helpful helm-lsp helm-ag gruvbox-theme flycheck expand-region doom-themes doom-modeline dashboard dap-mode company cdlatex)))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
