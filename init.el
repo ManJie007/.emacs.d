@@ -405,3 +405,8 @@
          ("M-s T" . google-translate-query-translate)))
 
 (global-set-key (kbd "C-c w") 'eww)
+
+;;垃圾回收阈值
+(setq gc-cons-threshold (* 50 1000 1000))  ;; 50 MB
+;;进程输出缓冲大小
+(setq read-process-output-max (* 1024 1024))  ;; 1 MB
