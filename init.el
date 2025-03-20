@@ -78,7 +78,8 @@
 (use-package avy
     :ensure t
     :bind
-    (("M-s c" . avy-goto-char)) ;; 可以绑定到您喜欢的快捷键
+    ;;(("M-s c" . avy-goto-char)) ;; 可以绑定到您喜欢的快捷键W
+    (("C-;" . avy-goto-char)) ;; 可以绑定到您喜欢的快捷键W      
   )
 
   (use-package imenu-list
@@ -382,4 +383,26 @@
 (use-package wgrep-ag
 :ensure t)
 
+(use-package google-translate
+  :ensure t
+  :custom
+  (google-translate-backend-method 'curl)
+  (google-translate-default-source-language "en")
+  (google-translate-default-target-language "zh-CN")
+  :bind (("M-s t" . google-translate-at-point)
+         ("M-s T" . google-translate-query-translate)))
+
 (global-set-key (kbd "C-c w") 'eww)
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   '(google-translate yasnippet-snippets which-key wgrep-ag vterm-toggle undo-tree rust-mode projectile org-modern org-bullets multiple-cursors magit lsp-ui lsp-pyright imenu-list helpful helm-lsp helm-ag gruvbox-theme flycheck expand-region doom-themes doom-modeline dashboard dap-mode company cdlatex)))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )

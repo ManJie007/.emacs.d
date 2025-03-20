@@ -325,7 +325,8 @@ and set $EDITOR="emacslient -t"
   (use-package avy
       :ensure t
       :bind
-      (("M-s c" . avy-goto-char)) ;; 可以绑定到您喜欢的快捷键
+      ;;(("M-s c" . avy-goto-char)) ;; 可以绑定到您喜欢的快捷键W
+      (("C-;" . avy-goto-char)) ;; 可以绑定到您喜欢的快捷键W      
     )
 
     (use-package imenu-list
@@ -739,6 +740,21 @@ TODO
 
   (use-package wgrep-ag
   :ensure t)
+
+#+end_src
+
+** Google
+
+#+begin_src emacs-lisp
+
+(use-package google-translate
+  :ensure t
+  :custom
+  (google-translate-backend-method 'curl)
+  (google-translate-default-source-language "en")
+  (google-translate-default-target-language "zh-CN")
+  :bind (("M-s t" . google-translate-at-point)
+         ("M-s T" . google-translate-query-translate)))
 
 #+end_src
 
