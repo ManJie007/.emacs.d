@@ -424,6 +424,17 @@ and set $EDITOR="emacslient -t"
 
 #+end_src
 ** Quotes & Parenthesis & Delimiters Handling
+*** Insert & Edit
+
+#+begin_src emacs-lisp
+    (use-package smartparens
+      :ensure t
+      :config
+      (smartparens-global-mode 1)
+      :bind
+      ("C-c s c" . sp-change-inner))
+#+end_src
+
 *** Select
 
 #+begin_src emacs-lisp

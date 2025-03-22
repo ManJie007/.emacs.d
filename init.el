@@ -154,6 +154,13 @@
        ("C-<"         . mc/mark-previous-like-this) ;; 标记上一个匹配
        ("C-c C-<"     . mc/mark-all-like-this)))  ;; 标记所有匹配
 
+(use-package smartparens
+  :ensure t
+  :config
+  (smartparens-global-mode 1)
+  :bind
+  ("C-c s c" . sp-change-inner))
+
 (use-package expand-region
 :ensure t
 :bind ("C-=" . er/expand-region))
