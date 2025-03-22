@@ -805,6 +805,16 @@ TODO
 #+end_src
 
 * TODO DevOps
+
+#+begin_src emacs-lisp
+;; Docker 管理
+(use-package docker
+  :ensure t
+  :bind ("C-c d" . docker)  ;; 绑定快捷键快速打开 docker 管理界面
+  :config
+  (setq docker-command "docker"))  ;; 如果你有自定义的 docker 命令路径，可以在这里配置
+#+end_src
+
 * Performance
 
 #+begin_src emacs-lisp

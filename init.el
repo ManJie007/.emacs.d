@@ -414,20 +414,14 @@
 
 (global-set-key (kbd "C-c w") 'eww)
 
+;; Docker 管理
+(use-package docker
+  :ensure t
+  :bind ("C-c d" . docker)  ;; 绑定快捷键快速打开 docker 管理界面
+  :config
+  (setq docker-command "docker"))  ;; 如果你有自定义的 docker 命令路径，可以在这里配置
+
 ;;垃圾回收阈值
 (setq gc-cons-threshold (* 50 1000 1000))  ;; 50 MB
 ;;进程输出缓冲大小
 (setq read-process-output-max (* 1024 1024))  ;; 1 MB
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(package-selected-packages
-   '(go-mode yasnippet-snippets which-key wgrep-ag vterm-toggle undo-tree rust-mode projectile org-modern org-bullets multiple-cursors magit lsp-ui lsp-pyright imenu-list helpful helm-lsp helm-ag gruvbox-theme google-translate flycheck expand-region doom-themes doom-modeline dashboard dap-mode company cdlatex)))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
