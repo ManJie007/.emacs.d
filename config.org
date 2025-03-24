@@ -373,29 +373,31 @@ and set $EDITOR="emacslient -t"
 ** minibuffer
 
 #+begin_src emacs-lisp
-    ;; 安装和配置 Helm
-    (use-package helm
-      :ensure t
-      :init
-      ;; 基础初始化设置
-      (setq helm-move-to-line-cycle-in-source t)  ;; 循环浏览候选项
-      (setq helm-M-x-fuzzy-match t) ;; 启用 M-x 模糊匹配
-      (setq helm-buffers-fuzzy-matching t)
-      (setq helm-recentf-fuzzy-match t)
-      :config
-      ;; 加载核心配置并启用 Helm
-      (helm-mode 1)
+  ;; 安装和配置 Helm
+  (use-package helm
+    :ensure t
+    :init
+    ;; 基础初始化设置
+    (setq helm-move-to-line-cycle-in-source t)  ;; 循环浏览候选项
+    (setq helm-M-x-fuzzy-match t) ;; 启用 M-x 模糊匹配
+    (setq helm-buffers-fuzzy-matching t)
+    (setq helm-recentf-fuzzy-match t)
+    :config
+    ;; 加载核心配置并启用 Helm
+    (helm-mode 1)
 
-      ;; 快捷键绑定
-      :bind (("M-x" . helm-M-x)                   ;; 替换默认的 M-x
-             ("C-s" . helm-occur)                ;; 切换缓冲区
-             ("C-x C-f" . helm-find-files)        ;; 查找文件
-             ("C-x b" . helm-mini)                ;; 切换缓冲区
-             ("C-x r b" . helm-filtered-bookmarks) ;; 管理书签
-             ("M-y" . helm-show-kill-ring)        ;; 剪贴板历史
-             ("C-h r" . helm-info-emacs) ;; 打开 Emacs 帮助文档
-             ("C-c h o" . helm-occur)
-             ("M-g i" . helm-imenu)))           ;; 搜索当前缓冲区内容
+    ;; 快捷键绑定
+    :bind (("M-x" . helm-M-x)                   ;; 替换默认的 M-x
+           ("C-s" . helm-occur)                ;; 切换缓冲区
+           ("C-x C-f" . helm-find-files)        ;; 查找文件
+           ("C-x b" . helm-mini)                ;; 切换缓冲区
+           ("C-x r b" . helm-filtered-bookmarks) ;; 管理书签
+           ("M-y" . helm-show-kill-ring)        ;; 剪贴板历史
+           ("C-h r" . helm-info-emacs) ;; 打开 Emacs 帮助文档
+           ("C-c h o" . helm-occur)
+  	 ("C-c b" . helm-mark-ring)
+  	 ("C-c B" . helm-global-mark-ring)  	 
+           ("M-g i" . helm-imenu)))           ;; 搜索当前缓冲区内容
 #+end_src
 
 ** Mode-line

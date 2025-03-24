@@ -139,6 +139,8 @@
          ("M-y" . helm-show-kill-ring)        ;; 剪贴板历史
          ("C-h r" . helm-info-emacs) ;; 打开 Emacs 帮助文档
          ("C-c h o" . helm-occur)
+	 ("C-c b" . helm-mark-ring)
+	 ("C-c B" . helm-global-mark-ring)  	 
          ("M-g i" . helm-imenu)))           ;; 搜索当前缓冲区内容
 
 (use-package doom-modeline
