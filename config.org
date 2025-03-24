@@ -828,6 +828,12 @@ TODO
   (setq docker-command "docker"))  ;; 如果你有自定义的 docker 命令路径，可以在这里配置
 #+end_src
 
+* Screencasting
+
+#+begin_src emacs-lisp
+(keycast-header-line-mode)
+#+end_src
+
 * Performance
 
 #+begin_src emacs-lisp
