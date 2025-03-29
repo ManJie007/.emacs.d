@@ -79,7 +79,7 @@
     :ensure t
     :bind
     ;;(("M-s c" . avy-goto-char)) ;; 可以绑定到您喜欢的快捷键W
-    (("C-;" . avy-goto-char)) ;; 可以绑定到您喜欢的快捷键W      
+    (("C-;" . avy-goto-char-2)) ;; 可以绑定到您喜欢的快捷键W      
   )
 
   (use-package imenu-list
