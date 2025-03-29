@@ -559,8 +559,21 @@ and set $EDITOR="emacslient -t"
   ;;pip install debugpy
   (require 'dap-python)
   (setq dap-python-debugger 'debugpy)
-  (setq dap-python-executable "python3"))
+  (setq dap-python-executable "python3")
   ;; (use-package dap-LANGUAGE) to load the dap adapter for your language
+
+  ;;dap-go
+  (require 'dap-dlv-go)
+  (setq dap-go-debug-program '("dlv" "dap"))
+  :bind
+  (:map dap-mode-map
+      ("<f5>" . dap-debug)
+      ("<f6>" . dap-disconnect)
+      ("<f7>" . dap-breakpoint-toggle)
+      ("<f8>" . dap-continue)      
+      ("<f9>" . dap-next)
+      ("<f10>" . dap-step-in)
+      ("<f11>" . dap-step-out)))
 
   ;; optional if you want which-key integration
   (use-package which-key
