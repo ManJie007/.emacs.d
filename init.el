@@ -394,15 +394,24 @@
   :config
   (setq magit-display-buffer-function #'magit-display-buffer-fullframe-status-v1)) ;; 全屏显示 magit-status
 
-(use-package vterm
-  :ensure )
+;;(use-package vterm
+;;  :ensure )
+;;
+;;;;按 C-c t 可以打开/关闭 vterm，类似于 Guake 终端
+;;(use-package vterm-toggle
+;;  :ensure t
+;;  :bind (("C-c t" . vterm-toggle)))
+;;
+;;(setq vterm-term-environment-variable "xterm-256color")
 
-;;按 C-c t 可以打开/关闭 vterm，类似于 Guake 终端
-(use-package vterm-toggle
-  :ensure t
-  :bind (("C-c t" . vterm-toggle)))
-
-(setq vterm-term-environment-variable "xterm-256color")
+(use-package multi-term
+:ensure t
+:config
+(setq multi-term-program "/bin/zsh") ;; 你也可以用 zsh
+:bind
+(("C-c t N" . multi-term)          ;; 新建一个 term
+ ("C-c t p" . multi-term-prev)     ;; 上一个 term
+ ("C-c t n" . multi-term-next)))   ;; 下一个 term
 
 (use-package helm-ag
   :ensure t
