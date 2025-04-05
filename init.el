@@ -452,7 +452,7 @@
   :config
   (setq docker-command "docker"))  ;; 如果你有自定义的 docker 命令路径，可以在这里配置
 
-(keycast-header-line-mode)
+(keycast-tab-bar-mode)
 
 ;;垃圾回收阈值
 (setq gc-cons-threshold (* 50 1000 1000))  ;; 50 MB

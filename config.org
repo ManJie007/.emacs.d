@@ -854,7 +854,7 @@ TODO
 * Screencasting
 
 #+begin_src emacs-lisp
-(keycast-header-line-mode)
+(keycast-tab-bar-mode)
 #+end_src
 
 * Performance
