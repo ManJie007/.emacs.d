@@ -225,10 +225,11 @@
          (c++-mode . lsp)
          (go-mode . lsp)
          (rust-mode . lsp)
-         (html-mode . lsp)
-         (css-mode . lsp)
-         (js-mode . lsp)
-         (typescript-mode . lsp)           
+	 (web-mode . lsp)
+         ;;(html-mode . lsp)
+         ;;(css-mode . lsp)
+         ;;(js-mode . lsp)
+         ;;(typescript-mode . lsp)           
          ;; if you want which-key integration
          (lsp-mode . lsp-enable-which-key-integration))
   :commands lsp)
@@ -295,6 +296,25 @@
          (before-save . gofmt-before-save)) ;; 保存时自动格式化
   :config
   (setq gofmt-command "goimports"))  ;; 用 goimports 替代 gofmt，自动加 import
+
+(use-package web-mode
+    :ensure t
+    :mode
+    (("\\.html?\\'" . web-mode)    ;; HTML 文件
+     ("\\.css\\'"   . web-mode)
+     ("\\.js\\'"    . web-mode)
+     ("\\.jsx\\'"   . web-mode)
+     ("\\.ts\\'"    . web-mode)
+     ("\\.tsx\\'"   . web-mode)     
+     ("\\.phtml\\'" . web-mode)
+     ("\\.php\\'" . web-mode)
+     ("\\.tpl\\'" . web-mode)
+     ("\\.[agj]sp\\'" . web-mode)
+     ("\\.as[cp]x\\'" . web-mode)
+     ("\\.erb\\'" . web-mode)
+     ("\\.mustache\\'" . web-mode)
+     ("\\.djhtml\\'" . web-mode))
+    :hook (web-mode . lsp))
 
 (use-package flycheck
 :ensure t
