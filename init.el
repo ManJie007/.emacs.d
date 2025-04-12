@@ -365,6 +365,9 @@
 (setq org-todo-keywords
   '((sequence "TODO(t)" "IN-PROGRESS(i)" "WAITING(w)" "|" "DONE(d)" "CANCELLED(c)")))
 
+;; 每次 TODO → DONE 会记录一个时间戳，非常适合日志审计和项目回溯。
+(setq org-log-done 'time)
+
 ;; capture 模板配置
 (setq org-capture-templates
       '(
@@ -399,6 +402,7 @@
    '((python . t)
      (dot . t)      ;; 启用 Graphviz
      (emacs-lisp . t)
+     (shell . t)
      )))
 
 ;;美化列表符号
