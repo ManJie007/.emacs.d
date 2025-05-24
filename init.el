@@ -16,6 +16,14 @@
 ;;y-or-n-p 代替 yes or no
 (setq use-short-answers t)
 
+(global-auto-revert-mode 1)
+
+;; 使用空格代替 Tab 缩进
+(setq-default indent-tabs-mode nil)
+
+;; 设置缩进宽度为 4 个空格（适合 Rust/C/C++ 等）
+(setq-default tab-width 4)
+
 (set-face-attribute 'default nil
                     :height 150)
 
@@ -61,14 +69,25 @@
   :ensure t
   ;; 快捷键绑定
   :bind (("C-h f" . helpful-callable)          
-	     ("C-h v" . helpful-variable)
-	     ("C-h k" . helpful-key)
-	     ("C-h x" . helpful-command)))
+	       ("C-h v" . helpful-variable)
+	       ("C-h k" . helpful-key)
+	       ("C-h x" . helpful-command)))
 
 (winner-mode 1)
 
 ;;允许通过方向键快速切换窗口
 (windmove-default-keybindings)
+
+(use-package winum
+:ensure t
+:bind (("M-0" . winum-select-window-0-or-10)
+       ("M-1" . winum-select-window-1)
+       ("M-2" . winum-select-window-2)
+       ("M-3" . winum-select-window-3)
+       ("M-4" . winum-select-window-3)
+       )
+:config
+(winum-mode))
 
 (tab-bar-mode 1)
 
@@ -186,6 +205,12 @@
 
 (use-package yasnippet-snippets
   :ensure t)
+
+(use-package yaml-mode
+:ensure t)
+
+(use-package thrift
+:ensure t)
 
 (use-package company
  :ensure t
@@ -330,10 +355,10 @@
 ;; Automatically tangle our Emacs.org config file when we save it
 (defun manjie/org-babel-tangle-config ()
   (when (string-equal (buffer-file-name)
-		      (expand-file-name "~/.emacs.d/config.org"))
+			(expand-file-name "~/.emacs.d/config.org"))
     ;; Dynamic scoping to the rescue
     (let ((org-confirm-babel-evaluate nil))
-      (org-babel-tangle))))
+	(org-babel-tangle))))
 
 ;;(add-hook 'org-mode-hook (lambda () (add-hook 'after-save-hook 'manjie/org-babel-tangle-config)))
 (add-hook 'after-save-hook
@@ -391,9 +416,9 @@
 (global-set-key (kbd "C-c a") 'org-agenda) ;; 绑定快捷键
 )
 
-;; 启用 cdlatex 支持 LaTeX 输入
-(use-package cdlatex
-  :hook (org-mode . turn-on-org-cdlatex)) ;; 在 org-mode 中启用 cdlatex
+;; ;; 启用 cdlatex 支持 LaTeX 输入
+;; (use-package cdlatex
+;;   :hook (org-mode . turn-on-org-cdlatex)) ;; 在 org-mode 中启用 cdlatex
 
 (with-eval-after-load 'org  
   ;; 启用 Org Babel 对 language 的支持
@@ -411,12 +436,20 @@
 :hook (org-mode . org-bullets-mode))
 
 (use-package magit
+    :ensure t
+    :bind (("C-x g" . magit-status)   ;; 快速打开 magit-status
+           ("C-x M-g" . magit-dispatch) ;; 打开 magit 调度菜单
+           ("C-c M-g" . magit-file-dispatch)) ;; 文件级操作
+    :config
+    (setq magit-display-buffer-function #'magit-display-buffer-fullframe-status-v1)) ;; 全屏显示 magit-status
+
+(use-package diff-hl
   :ensure t
-  :bind (("C-x g" . magit-status)   ;; 快速打开 magit-status
-         ("C-x M-g" . magit-dispatch) ;; 打开 magit 调度菜单
-         ("C-c M-g" . magit-file-dispatch)) ;; 文件级操作
+  :hook ((yaml-mode . diff-hl-mode)
+         (prog-mode . diff-hl-mode))
   :config
-  (setq magit-display-buffer-function #'magit-display-buffer-fullframe-status-v1)) ;; 全屏显示 magit-status
+  (diff-hl-flydiff-mode)
+  (diff-hl-margin-mode))
 
 ;;(use-package vterm
 ;;  :ensure )
@@ -445,7 +478,7 @@
   (setq helm-ag-fuzzy-match t)) ;; 启用模糊匹配
 
 (global-set-key (kbd "C-c g") 'helm-ag) ;; 当前目录搜索
-(global-set-key (kbd "C-c G") 'helm-do-ag) ;; 交互式搜索
+(global-set-key (kbd "M-s s") 'helm-do-ag) ;; 交互式搜索
 ;;(global-set-key (kbd "C-c p g") 'helm-projectile-ag) ;; 在 `projectile` 项目中搜索
 
  (use-package wgrep
@@ -476,9 +509,12 @@
   :config
   (setq docker-command "docker"))  ;; 如果你有自定义的 docker 命令路径，可以在这里配置
 
-(keycast-tab-bar-mode)
+(use-package keycast
+  :ensure t
+  :config
+  (keycast-tab-bar-mode))
 
 ;;垃圾回收阈值
-(setq gc-cons-threshold (* 50 1000 1000))  ;; 50 MB
+(setq gc-cons-threshold (* 100 1000 1000))  ;; 100 MB
 ;;进程输出缓冲大小
-(setq read-process-output-max (* 1024 1024))  ;; 1 MB
+(setq read-process-output-max (* 4 1024 1024))  ;; 4 MB

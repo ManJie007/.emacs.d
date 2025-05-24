@@ -225,6 +225,13 @@ and set $EDITOR="emacslient -t"
   ;;y-or-n-p 代替 yes or no
   (setq use-short-answers t)
 
+  (global-auto-revert-mode 1)
+
+  ;; 使用空格代替 Tab 缩进
+  (setq-default indent-tabs-mode nil)
+
+  ;; 设置缩进宽度为 4 个空格（适合 Rust/C/C++ 等）
+  (setq-default tab-width 4)
 #+end_src
 
 ** font
@@ -311,6 +318,17 @@ and set $EDITOR="emacslient -t"
 #+begin_src emacs-lisp
   ;;允许通过方向键快速切换窗口
   (windmove-default-keybindings)
+
+  (use-package winum
+  :ensure t
+  :bind (("M-0" . winum-select-window-0-or-10)
+         ("M-1" . winum-select-window-1)
+         ("M-2" . winum-select-window-2)
+         ("M-3" . winum-select-window-3)
+         ("M-4" . winum-select-window-3)
+         )
+  :config
+  (winum-mode))
 #+end_src
 *** Tabbar
 #+begin_src emacs-lisp
@@ -475,6 +493,14 @@ and set $EDITOR="emacslient -t"
 #+end_src
 
 * Programming
+** languages
+#+begin_src emacs-lisp
+  (use-package yaml-mode
+  :ensure t)
+
+  (use-package thrift
+  :ensure t)
+#+end_src
 ** Completion
 
 #+begin_src emacs-lisp
@@ -746,9 +772,9 @@ TODO
   (global-set-key (kbd "C-c a") 'org-agenda) ;; 绑定快捷键
   )
 
-  ;; 启用 cdlatex 支持 LaTeX 输入
-  (use-package cdlatex
-    :hook (org-mode . turn-on-org-cdlatex)) ;; 在 org-mode 中启用 cdlatex
+  ;; ;; 启用 cdlatex 支持 LaTeX 输入
+  ;; (use-package cdlatex
+  ;;   :hook (org-mode . turn-on-org-cdlatex)) ;; 在 org-mode 中启用 cdlatex
 #+end_src
 
 *** org babel
@@ -781,13 +807,21 @@ TODO
 * Version control
 
 #+begin_src emacs-lisp
-(use-package magit
+  (use-package magit
+    :ensure t
+    :bind (("C-x g" . magit-status)   ;; 快速打开 magit-status
+           ("C-x M-g" . magit-dispatch) ;; 打开 magit 调度菜单
+           ("C-c M-g" . magit-file-dispatch)) ;; 文件级操作
+    :config
+    (setq magit-display-buffer-function #'magit-display-buffer-fullframe-status-v1)) ;; 全屏显示 magit-status
+
+(use-package diff-hl
   :ensure t
-  :bind (("C-x g" . magit-status)   ;; 快速打开 magit-status
-         ("C-x M-g" . magit-dispatch) ;; 打开 magit 调度菜单
-         ("C-c M-g" . magit-file-dispatch)) ;; 文件级操作
+  :hook ((yaml-mode . diff-hl-mode)
+         (prog-mode . diff-hl-mode))
   :config
-  (setq magit-display-buffer-function #'magit-display-buffer-fullframe-status-v1)) ;; 全屏显示 magit-status
+  (diff-hl-flydiff-mode)
+  (diff-hl-margin-mode))  
 #+end_src
 
 * Integration
@@ -828,7 +862,7 @@ TODO
     (setq helm-ag-fuzzy-match t)) ;; 启用模糊匹配
 
   (global-set-key (kbd "C-c g") 'helm-ag) ;; 当前目录搜索
-  (global-set-key (kbd "C-c G") 'helm-do-ag) ;; 交互式搜索
+  (global-set-key (kbd "M-s s") 'helm-do-ag) ;; 交互式搜索
   ;;(global-set-key (kbd "C-c p g") 'helm-projectile-ag) ;; 在 `projectile` 项目中搜索
 
    (use-package wgrep
@@ -882,7 +916,10 @@ TODO
 * Screencasting
 
 #+begin_src emacs-lisp
-(keycast-tab-bar-mode)
+(use-package keycast
+  :ensure t
+  :config
+  (keycast-tab-bar-mode))  
 #+end_src
 
 * Performance
@@ -890,8 +927,8 @@ TODO
 #+begin_src emacs-lisp
 
   ;;垃圾回收阈值
-  (setq gc-cons-threshold (* 50 1000 1000))  ;; 50 MB
+  (setq gc-cons-threshold (* 100 1000 1000))  ;; 100 MB
   ;;进程输出缓冲大小
-  (setq read-process-output-max (* 1024 1024))  ;; 1 MB
+  (setq read-process-output-max (* 4 1024 1024))  ;; 4 MB
 
 #+end_src
